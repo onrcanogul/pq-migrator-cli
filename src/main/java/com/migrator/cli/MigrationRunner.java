@@ -48,7 +48,7 @@ public class MigrationRunner {
 
         String url = "jdbc:postgresql://" + host + ":" + port + "/" + dbName;
 
-        System.out.println("🔌 Connecting to database: " + url);
+        System.out.println("Connecting to database: " + url);
 
         try (Connection connection = DriverManager.getConnection(url, user, pass)) {
 
