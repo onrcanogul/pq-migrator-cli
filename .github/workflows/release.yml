@@ -23,4 +23,4 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: migrator-cli/target/*.jar
+          files: migrator-cli/target/*-shaded.jar
