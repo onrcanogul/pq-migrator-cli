@@ -78,6 +78,12 @@ public class MigrationService {
             repo.save(script);
 
             System.out.println("Migration applied successfully!");
+
+            System.out.println("Applied migration count: " + applied.size());
+            System.out.println("Pending migration count: " +
+                    scripts.stream()
+                            .filter(s -> !applied.contains(s.getVersion()))
+                            .count());
         }
 
         System.out.println("All pending migrations applied.");
