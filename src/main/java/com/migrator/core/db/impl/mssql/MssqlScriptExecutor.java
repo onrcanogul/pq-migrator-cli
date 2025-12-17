@@ -1,6 +1,7 @@
-package com.migrator.core.impl.mssql;
+package com.migrator.core.db.impl.mssql;
 
-import com.migrator.core.ScriptExecutor;
+import com.migrator.core.db.ScriptExecutor;
+import com.migrator.model.MigrationStatus;
 import com.migrator.model.MigrationScript;
 
 import java.sql.Connection;
@@ -35,6 +36,7 @@ public class MssqlScriptExecutor extends ScriptExecutor {
                 }
 
                 stmt.execute(sql);
+                script.updateStrategy(MigrationStatus.APPLIED);
             }
 
         } catch (SQLException e) {

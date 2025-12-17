@@ -1,6 +1,6 @@
-package com.migrator.core.impl.mssql;
+package com.migrator.core.db.impl.mssql;
 
-import com.migrator.core.DbVersionRepository;
+import com.migrator.core.db.DbVersionRepository;
 import com.migrator.model.MigrationScript;
 
 import java.sql.*;

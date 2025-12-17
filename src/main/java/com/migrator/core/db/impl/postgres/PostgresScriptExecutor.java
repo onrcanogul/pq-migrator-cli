@@ -1,6 +1,7 @@
-package com.migrator.core.impl.postgres;
+package com.migrator.core.db.impl.postgres;
 
-import com.migrator.core.ScriptExecutor;
+import com.migrator.core.db.ScriptExecutor;
+import com.migrator.model.MigrationStatus;
 import com.migrator.model.MigrationScript;
 
 import java.sql.Connection;
@@ -30,6 +31,7 @@ public class PostgresScriptExecutor extends ScriptExecutor {
 
             // Execute the raw SQL content
             stmt.execute(script.getContent());
+            script.updateStrategy(MigrationStatus.APPLIED);
 
         } catch (SQLException e) {
             throw new SQLException(

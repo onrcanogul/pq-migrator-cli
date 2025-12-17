@@ -1,7 +1,9 @@
-package com.migrator.core.impl;
+package com.migrator.core.db.impl;
 
-import com.migrator.core.DbVersionRepository;
-import com.migrator.core.ScriptExecutor;
+import com.migrator.core.db.DbVersionRepository;
+import com.migrator.core.db.ScriptExecutor;
+import com.migrator.core.failure.FailureStrategy;
+import com.migrator.model.MigrationResult;
 import com.migrator.model.MigrationScript;
 
 import java.sql.Connection;
@@ -53,7 +55,7 @@ public class MigrationService {
      *
      * @throws Exception if any migration fails
      */
-    public void migrate(Connection connection) throws Exception {
+    public void migrate(Connection connection, FailureStrategy strategy) throws Exception {
 
         System.out.println("Loading migration scripts...");
         List<MigrationScript> scripts = loader.loadScripts();
@@ -66,25 +68,13 @@ public class MigrationService {
 
         for (MigrationScript script : pending) {
 
-            System.out.println(
-                    "➡ Applying migration " + script.getVersion() +
-                            " (" + script.getDescription() + ")..."
-            );
+            MigrationResult result = executor.executeTransactional(connection, script, MAX_RETRIES);
 
-            connection.setAutoCommit(false);
+            repository.save(script);
 
-            try {
-                executor.executeWithRetry(script, MAX_RETRIES);
-                repository.save(script);
-                connection.commit();
-            } catch (Exception e) {
-                connection.rollback();
-                throw e;
-            } finally {
-                connection.setAutoCommit(true);
+            if (!strategy.shouldContinue(result)) {
+                throw result.getError();
             }
-
-            System.out.println("Migration applied successfully!");
         }
 
         System.out.println("All pending migrations applied.");

@@ -1,6 +1,6 @@
-package com.migrator.core.impl.mssql;
+package com.migrator.core.db.impl.mssql;
 
-import com.migrator.core.DatabaseConnector;
+import com.migrator.core.db.DatabaseConnector;
 import com.migrator.model.DbConfig;
 
 import java.sql.Connection;

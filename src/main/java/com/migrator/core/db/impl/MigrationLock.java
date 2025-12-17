@@ -1,4 +1,4 @@
-package com.migrator.core.impl;
+package com.migrator.core.db.impl;
 
 public interface MigrationLock {
 

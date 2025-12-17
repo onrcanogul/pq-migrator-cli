@@ -1,6 +1,6 @@
-package com.migrator.core.impl.mssql;
+package com.migrator.core.db.impl.mssql;
 
-import com.migrator.core.impl.MigrationLock;
+import com.migrator.core.db.impl.MigrationLock;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

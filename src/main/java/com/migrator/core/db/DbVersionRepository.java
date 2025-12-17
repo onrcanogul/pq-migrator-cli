@@ -1,9 +1,7 @@
-package com.migrator.core;
+package com.migrator.core.db;
 
 import com.migrator.model.MigrationScript;
 
-import java.sql.*;
-import java.util.HashSet;
 import java.util.Set;
 
 /**

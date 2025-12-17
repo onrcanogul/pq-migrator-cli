@@ -1,13 +1,15 @@
 package com.migrator.cli;
 
-import com.migrator.core.DatabaseConnector;
-import com.migrator.core.DbVersionRepository;
-import com.migrator.core.impl.MigrationLock;
-import com.migrator.core.impl.MigrationService;
-import com.migrator.core.ScriptExecutor;
-import com.migrator.core.impl.ScriptLoader;
+import com.migrator.core.db.DatabaseConnector;
+import com.migrator.core.db.DbVersionRepository;
+import com.migrator.core.db.impl.MigrationLock;
+import com.migrator.core.db.impl.MigrationService;
+import com.migrator.core.db.ScriptExecutor;
+import com.migrator.core.db.impl.ScriptLoader;
+import com.migrator.core.failure.FailureStrategy;
 import com.migrator.factory.DatabaseComponentFactory;
 import com.migrator.factory.DatabaseConnectorFactory;
+import com.migrator.factory.FailureStrategyFactory;
 import com.migrator.factory.MigrationLockFactory;
 import com.migrator.model.DatabaseType;
 import com.migrator.model.DbConfig;
@@ -55,7 +57,8 @@ public class MigrationRunner {
                 Integer.parseInt(params.get("db.port")),
                 params.get("db.name"),
                 params.get("db.user"),
-                params.get("db.pass")
+                params.get("db.pass"),
+                params.get("failure-strategy")
         );
 
         String migrationDir = params.get("migrations");
@@ -75,17 +78,16 @@ public class MigrationRunner {
             // Core components
             ScriptLoader loader = new ScriptLoader(migrationDir);
 
-            DbVersionRepository repository =
-                    DatabaseComponentFactory.createRepository(dbType, connection);
+            DbVersionRepository repository = DatabaseComponentFactory.createRepository(dbType, connection);
 
-            ScriptExecutor executor =
-                    DatabaseComponentFactory.createExecutor(dbType, connection);
+            ScriptExecutor executor = DatabaseComponentFactory.createExecutor(dbType, connection);
 
             // Run migration
-            MigrationService service =
-                    new MigrationService(loader, repository, executor);
+            MigrationService service = new MigrationService(loader, repository, executor);
 
-            service.migrate(connection);
+            FailureStrategy failureStrategy = FailureStrategyFactory.from(config.failureStrategy());
+
+            service.migrate(connection, failureStrategy);
         }
         finally {
             System.out.println("Releasing migration lock...");

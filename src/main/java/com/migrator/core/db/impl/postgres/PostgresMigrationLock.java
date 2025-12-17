@@ -1,6 +1,6 @@
-package com.migrator.core.impl.postgres;
+package com.migrator.core.db.impl.postgres;
 
-import com.migrator.core.impl.MigrationLock;
+import com.migrator.core.db.impl.MigrationLock;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

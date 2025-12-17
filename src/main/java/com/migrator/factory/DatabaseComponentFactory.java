@@ -1,13 +1,13 @@
 package com.migrator.factory;
 
-import com.migrator.core.DbVersionRepository;
-import com.migrator.core.impl.mssql.MssqlDbVersionRepository;
-import com.migrator.core.impl.mssql.MssqlScriptExecutor;
-import com.migrator.core.impl.oracle.OracleDbVersionRepository;
-import com.migrator.core.impl.oracle.OracleScriptExecutor;
-import com.migrator.core.impl.postgres.PostgresDbVersionRepository;
-import com.migrator.core.impl.postgres.PostgresScriptExecutor;
-import com.migrator.core.ScriptExecutor;
+import com.migrator.core.db.DbVersionRepository;
+import com.migrator.core.db.impl.mssql.MssqlDbVersionRepository;
+import com.migrator.core.db.impl.mssql.MssqlScriptExecutor;
+import com.migrator.core.db.impl.oracle.OracleDbVersionRepository;
+import com.migrator.core.db.impl.oracle.OracleScriptExecutor;
+import com.migrator.core.db.impl.postgres.PostgresDbVersionRepository;
+import com.migrator.core.db.impl.postgres.PostgresScriptExecutor;
+import com.migrator.core.db.ScriptExecutor;
 import com.migrator.model.DatabaseType;
 
 import java.sql.Connection;

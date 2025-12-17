@@ -12,6 +12,7 @@ public record DbConfig(
         int port,
         String database,
         String user,
-        String password
+        String password,
+        String failureStrategy
 ) {
 }

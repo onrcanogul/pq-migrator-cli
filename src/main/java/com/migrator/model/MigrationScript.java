@@ -30,6 +30,9 @@ public class MigrationScript {
     /** SHA-256 checksum of the SQL content. */
     private final String checksum;
 
+    /** Failure Strategy of the script. */
+    private MigrationStatus strategy;
+
     /**
      * Creates a new MigrationScript instance.
      *
@@ -38,11 +41,12 @@ public class MigrationScript {
      * @param content     Full SQL content of the migration file
      * @param checksum    Hash value used to detect modifications
      */
-    public MigrationScript(String version, String description, String content, String checksum) {
+    public MigrationScript(String version, String description, String content, String checksum, MigrationStatus strategy) {
         this.version = version;
         this.description = description;
         this.content = content;
         this.checksum = checksum;
+        this.strategy = strategy;
     }
 
     /** @return Migration version identifier */
@@ -63,5 +67,15 @@ public class MigrationScript {
     /** @return SHA-256 checksum of the SQL content */
     public String getChecksum() {
         return checksum;
+    }
+
+    /** @return Failure strategy of the script */
+    public MigrationStatus getStrategy() {
+        return strategy;
+    }
+
+    /** Updates the strategy of the migration */
+    public void updateStrategy(MigrationStatus strategy) {
+        this.strategy = strategy;
     }
 }

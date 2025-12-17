@@ -1,9 +1,9 @@
 package com.migrator.factory;
 
-import com.migrator.core.impl.MigrationLock;
-import com.migrator.core.impl.mssql.MssqlMigrationLock;
-import com.migrator.core.impl.oracle.OracleMigrationLock;
-import com.migrator.core.impl.postgres.PostgresMigrationLock;
+import com.migrator.core.db.impl.MigrationLock;
+import com.migrator.core.db.impl.mssql.MssqlMigrationLock;
+import com.migrator.core.db.impl.oracle.OracleMigrationLock;
+import com.migrator.core.db.impl.postgres.PostgresMigrationLock;
 
 import java.sql.Connection;
 

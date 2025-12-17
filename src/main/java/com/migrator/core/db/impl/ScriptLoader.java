@@ -1,6 +1,7 @@
-package com.migrator.core.impl;
+package com.migrator.core.db.impl;
 
 import com.migrator.model.MigrationScript;
+import com.migrator.model.MigrationStatus;
 import com.migrator.util.ChecksumUtil;
 
 import java.io.IOException;
@@ -79,7 +80,7 @@ public class ScriptLoader {
             // Compute checksum
             String checksum = ChecksumUtil.generateChecksum(content);
 
-            return new MigrationScript(version, description, content, checksum);
+            return new MigrationScript(version, description, content, checksum, MigrationStatus.PENDING);
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to parse migration file: " + path, e);

@@ -1,4 +1,4 @@
-package com.migrator.core;
+package com.migrator.core.db;
 
 import com.migrator.model.DbConfig;
 

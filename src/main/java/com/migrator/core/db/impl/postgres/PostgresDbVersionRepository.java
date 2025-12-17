@@ -1,8 +1,9 @@
-package com.migrator.core.impl.postgres;
+package com.migrator.core.db.impl.postgres;
 
-import com.migrator.core.DbVersionRepository;
+import com.migrator.core.db.DbVersionRepository;
 import com.migrator.model.MigrationScript;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -64,6 +65,22 @@ public class PostgresDbVersionRepository implements DbVersionRepository {
             );
         }
     }
+
+    public void saveApplied(Connection connection, MigrationScript script) throws SQLException {
+
+        String sql = """
+        INSERT INTO schema_migrations
+        (version, description, status, executed_at)
+        VALUES (?, ?, 'APPLIED', CURRENT_TIMESTAMP)
+    """;
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, script.getVersion());
+            ps.setString(2, script.getDescription());
+            ps.executeUpdate();
+        }
+    }
+
 
     private void ensureMigrationInfrastructure() throws SQLException {
 
